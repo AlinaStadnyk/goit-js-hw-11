@@ -1,2 +1,94 @@
-@import './common';
-@import './example';
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin: 0
+}
+
+ul,
+ol {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+}
+
+
+
+
+——————————— a {
+    text-decoration: none;
+    color: currentColor;
+}
+
+.link {
+    text-decoration: none;
+}
+
+address {
+    font-style: normal;
+}
+
+.list {
+    list-style: none;
+}
+
+body {
+    Margin: 0
+}
+img {
+    display: block;
+   width: 100%;
+
+ 
+}
+button {
+    font-family: inherit;
+    color: currentColor;
+    width: 200px;
+        height: 50px;
+        font-size: 24px;
+}
+
+input {
+    font-family: inherit;
+    width: 400px;
+    height: 50px;
+    font-size: 24px;
+}
+.gallery {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 20px;
+   
+}
+.photo-card {
+    width: calc((100% - 90px) / 3);
+    height: 300px;
+ 
+
+
+
+
+}
+.info {
+    display: flex;
+    flex-direction: row;
+    gap: 15px
+}
+.info-item {
+    display: flex;
+flex-direction: row;
+align-items: center;
+
+}
+.gallery__link {
+    display: block;
+    text-decoration: none;
+    height: 100%;
+}

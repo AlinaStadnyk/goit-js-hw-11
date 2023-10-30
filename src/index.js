@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const selectors = {
   form: document.querySelector('.search-form'),
@@ -22,6 +23,7 @@ async function handlerSearch(evt) {
     image_type: 'photo',
     orientation: 'horizontal',
     safesearch: true,
+    per_page: 40,
   });
 
   const response = await axios.get(`${BASE_URL}?${params}`);
@@ -29,19 +31,20 @@ async function handlerSearch(evt) {
   console.log(data);
   const totalHits = data.totalHits;
   console.log(data.hits);
-  data.hits.map(
-    ({
-      webformatURL,
-      largeImageURL,
-      views,
-      tags,
-      likes,
-      comments,
-      downloads,
-    }) => {
-      selectors.gallery.innerHTML = `
+  const markup = data.hits
+    .map(
+      ({
+        webformatURL,
+        largeImageURL,
+        views,
+        tags,
+        likes,
+        comments,
+        downloads,
+      }) =>
+        `
       <div class="photo-card">
-  <img width = 100px src="${webformatURL}" alt="${tags}" loading="lazy" />
+   <a class = "gallery-link" href="${largeImageURL}"><img width = 100px src="${webformatURL}" alt="${tags}" loading="lazy" /></a>
   <div class="info">
     <p class="info-item">
       <b>${likes} Likes</b>
@@ -59,9 +62,10 @@ async function handlerSearch(evt) {
 </div>
 
       
-      `;
-    }
-  );
+      `
+    )
+    .join('');
+  selectors.gallery.innerHTML = markup;
 
   if (totalHits === 0) {
     Notiflix.Notify.failure(
@@ -69,5 +73,6 @@ async function handlerSearch(evt) {
     );
   } else {
     Notiflix.Notify.success(`"Hooray! We found ${totalHits}images."`);
+    const lightbox = new SimpleLightbox('.gallery a').refresh();
   }
 }
