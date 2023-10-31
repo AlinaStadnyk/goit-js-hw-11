@@ -38,6 +38,6 @@ function createMarkup(arr) {
       `
     )
     .join('');
-  selectors.gallery.innerHTML = markup;
+  selectors.gallery.insertAdjacentHTML('beforeend', markup);
 }
 export { createMarkup };

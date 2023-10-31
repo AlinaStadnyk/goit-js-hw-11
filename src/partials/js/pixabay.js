@@ -10,7 +10,7 @@ async function fetchPhotos(query, pages) {
     orientation: 'horizontal',
     safesearch: true,
     per_page: 40,
-    page: 1,
+    page: pages,
   });
   return await axios.get(`${BASE_URL}?${params}`).then(response => {
     return response.data;

@@ -15,6 +15,8 @@ const selectors = {
 const options = {
   rootMargin: '300px',
 };
+let query = null;
+let page = 1;
 
 const observer = new IntersectionObserver(loadMore, options);
 
@@ -23,9 +25,9 @@ selectors.form.addEventListener('submit', handlerSearch);
 function handlerSearch(evt) {
   selectors.gallery.innerHTML = '';
   evt.preventDefault();
-  page = 1;
   console.log(evt);
   const request = evt.currentTarget[0].value;
+  query = request;
   fetchPhotos(request, page)
     .then(response => {
       createMarkup(response.hits);
@@ -52,8 +54,6 @@ function handlerSearch(evt) {
       );
     });
 }
-
-let page = 1;
 
 function loadMore(entries, observer) {
   console.log(entries);
