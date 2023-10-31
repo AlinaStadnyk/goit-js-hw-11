@@ -26,7 +26,7 @@ selectors.form.addEventListener('submit', handlerSearch);
 function handlerSearch(evt) {
   selectors.gallery.innerHTML = '';
   evt.preventDefault();
-  console.log(evt);
+
   const request = evt.currentTarget[0].value;
   query = request;
   fetchPhotos(request, page)
@@ -36,8 +36,6 @@ function handlerSearch(evt) {
       const totalHits = response.totalHits;
       const totalPages = Math.ceil(totalHits / 40);
       if (page < totalPages) {
-        console.log(page);
-        console.log(totalPages);
         observer.observe(selectors.guard);
       }
 
@@ -47,21 +45,18 @@ function handlerSearch(evt) {
         );
       } else {
         Notiflix.Notify.success(`"Hooray! We found ${totalHits} images."`);
-        // const lightbox = new SimpleLightbox('.gallery a').refresh();
+
         await lightbox.refresh();
         slowScroll();
       }
     })
 
     .catch(err => {
-      Notiflix.Notify.failure(
-        'Oops! Something went wrong! Try reloading the page!'
-      );
+      console.log(err);
     });
 }
 
 function loadMore(entries, observer) {
-  console.log(entries);
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       page += 1;
