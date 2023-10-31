@@ -15,6 +15,7 @@ const selectors = {
 const options = {
   rootMargin: '300px',
 };
+const lightbox = new SimpleLightbox('.gallery a').refresh();
 let query = null;
 let page = 1;
 
@@ -29,12 +30,14 @@ function handlerSearch(evt) {
   const request = evt.currentTarget[0].value;
   query = request;
   fetchPhotos(request, page)
-    .then(response => {
+    .then(async response => {
       createMarkup(response.hits);
 
       const totalHits = response.totalHits;
       const totalPages = Math.ceil(totalHits / 40);
       if (page < totalPages) {
+        console.log(page);
+        console.log(totalPages);
         observer.observe(selectors.guard);
       }
 
@@ -44,7 +47,9 @@ function handlerSearch(evt) {
         );
       } else {
         Notiflix.Notify.success(`"Hooray! We found ${totalHits} images."`);
-        const lightbox = new SimpleLightbox('.gallery a').refresh();
+        // const lightbox = new SimpleLightbox('.gallery a').refresh();
+        await lightbox.refresh();
+        slowScroll();
       }
     })
 
@@ -61,14 +66,22 @@ function loadMore(entries, observer) {
     if (entry.isIntersecting) {
       page += 1;
       fetchPhotos(query, page)
-        .then(response => {
+        .then(async response => {
           createMarkup(response.hits);
-
+          // const lightbox = new SimpleLightbox('.gallery a').refresh();
+          await lightbox.refresh();
+          slowScroll();
           const totalHits = response.totalHits;
-          const totalPages = Math.ceil(totalHits / 40);
-          if (page < totalPages) {
-            observer.observe(selectors.guard);
-            const lightbox = new SimpleLightbox('.gallery a').refresh();
+          const totalPages = Math.floor(totalHits / 40);
+
+          if (page >= totalPages) {
+            observer.unobserve(selectors.guard);
+            Notiflix.Notify.info(
+              'You have now seen all the images matching your query!',
+              {
+                timeout: 5000,
+              }
+            );
           }
         })
         .catch(err => {
@@ -77,5 +90,16 @@ function loadMore(entries, observer) {
           );
         });
     }
+  });
+}
+
+function slowScroll() {
+  const { height: cardHeight } = document
+    .querySelector('.gallery')
+    .firstElementChild.getBoundingClientRect();
+
+  window.scrollBy({
+    top: cardHeight * 2,
+    behavior: 'smooth',
   });
 }

@@ -37,15 +37,15 @@ address {
 }
 
 body {
-    Margin: 0
-}
+    Margin: 0;
+    background-color: #fdf86d;
+        background-image: linear-gradient(315deg, #fdf86d 0%, #bddcf1 74%);}
 img {
   
     display: block;
-        width: 100%;
-        height: auto
-
- 
+       width: 300px;
+        height: 200px;
+    
 }
 button {
     font-family: inherit;
@@ -62,20 +62,24 @@ input {
     font-size: 24px;
 }
 .gallery {
+    margin: 0 auto;
+    width: 1280px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 30px;
-    padding: 20px;
+    gap: 40px;
+    padding:30px, 20px;
+    justify-content: center;
    
 }
 .photo-card {
-    width: calc((100% - 90px) / 3);
-
-
-
-
-
+  
+    width: 300px;
+        height: 264px;
+        transition: all linear 250ms;
+}
+.photo-card:hover {
+    transform: scale(1.2);
 }
 .info {
     display: flex;
@@ -83,9 +87,8 @@ input {
     gap: 15px
 }
 .info-item {
-    display: flex;
-flex-direction: row;
-align-items: center;
+font-size: 16px;
+
 text-align: center;
 
 }
@@ -96,4 +99,27 @@ text-align: center;
 }
 .hidden {
     visibility: hidden;
+}
+.search-form {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+input {
+    padding: 15px;
+    font-size: 40px;
+    width: 500px;
+    height: 40px;
+    background-color: #FFFFCC
+ 
+}
+button {
+    height: 70px;
+    font-size: 30px;
+    background-color: #D5F3FE;
+  cursor: pointer;
+
 }
