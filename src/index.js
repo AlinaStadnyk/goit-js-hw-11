@@ -60,7 +60,7 @@ function loadMore(entries, observer) {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       page += 1;
-      fetchPhotos(page)
+      fetchPhotos(query, page)
         .then(response => {
           createMarkup(response.hits);
 
